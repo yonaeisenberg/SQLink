@@ -16,7 +16,7 @@ When the server goes up, it should automatically fill the database with some see
 
 - Run npm install inside the client folder
 - In login.component.ts, where the axios post request is, make sure to change the port in the url to your relevant server port.
-- Same for the Get request in projexts-table.component.ts
+- Same for the Get request in projects-table.component.ts
 - Run the client with ng serve --open
 
 3. Using the app
