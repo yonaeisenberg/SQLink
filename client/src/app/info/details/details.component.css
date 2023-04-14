@@ -1,0 +1,12 @@
+.container {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    background-color: lightgrey;
+    width: 25%;
+}
+
+.row {
+    margin: 10px;
+}

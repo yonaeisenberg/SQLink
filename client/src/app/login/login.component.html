@@ -1,0 +1,49 @@
+<div class="header">
+    <h1>Welcome to login page</h1>
+</div>
+<div class="row">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input 
+                type="email" 
+                id="email" 
+                class="form-control" 
+                [(ngModel)]="email" 
+                name="email" 
+                #emailForm="ngModel" 
+                required
+                email
+            >
+            <div [hidden]="emailForm.valid || emailForm.pristine"
+                class="alert alert-danger">
+                 Must be a valid email address
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+                type="password" 
+                id="password" 
+                class="form-control" 
+                [(ngModel)]="password" 
+                name="password" 
+                #passwordForm="ngModel" 
+                pattern="^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$"
+                required
+            >
+            <div [hidden]="passwordForm.valid || passwordForm.pristine"
+                class="alert alert-danger">
+                 Password must be at least 8-characters long
+                 <br /> 
+                 and contain at least one number and one capital letter
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" [value]="buttonText" [disabled]="!loginForm.valid">
+        </div>
+        <div *ngIf="notFound" class="alert alert-danger">
+            User not found for entered credentials
+        </div>
+    </form>
+</div>

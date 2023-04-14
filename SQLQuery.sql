@@ -1,0 +1,24 @@
+CREATE DATABASE SQLink;
+
+USE SQLink;
+
+CREATE TABLE Users (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    email NVARCHAR(255) NOT NULL UNIQUE,
+    password NVARCHAR(255) NOT NULL,
+    token NVARCHAR(255) NOT NULL UNIQUE,
+    name NVARCHAR(255) NOT NULL,
+    team NVARCHAR(255) NOT NULL,
+    joinedAt DATE NOT NULL,
+    avatar NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Projects (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    userId INT NOT NULL FOREIGN KEY REFERENCES Users(id),
+    name NVARCHAR(255) NOT NULL,
+    score INT NOT NULL,
+    durationInDays INT NOT NULL,
+    bugsCount INT NOT NULL,
+    madeDadeline BIT NOT NULL
+);

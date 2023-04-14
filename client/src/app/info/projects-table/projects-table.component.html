@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <span>Average score: {{average | number: '1.0-2'}}</span>
+        <span>Percentage of projects that made deadline: {{ percentage | percent: '1.0-2' }}</span>
+        <span>Search: <input type="text" [(ngModel)]="filterText" (input)="onFilterChange()"></span>
+    </div>
+    <mat-table 
+        class="projects-table mat-elevation-z8" 
+        [dataSource]="projectsSource"
+        matSort 
+        matSortActive="name" 
+        matSortDirection="asc" 
+        matSortDisableClear
+    >
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell class="name-cell"
+                    *matCellDef="let project">{{project.name}}</mat-cell>
+
+        </ng-container>
+
+        <ng-container matColumnDef="score">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Score</mat-header-cell>
+            <mat-cell class="score-cell"
+                    *matCellDef="let project">{{project.score}}</mat-cell>
+
+        </ng-container>
+
+        <ng-container matColumnDef="durationInDays">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Duration (days)</mat-header-cell>
+            <mat-cell class="duration-cell"
+                    *matCellDef="let project">{{project.durationInDays}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="bugsCount">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Bugs Count</mat-header-cell>
+            <mat-cell class="bugsCount-cell"
+                    *matCellDef="let project">{{project.bugsCount}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="madeDadeline">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Made Deadline</mat-header-cell>
+            <mat-cell class="madeDeadline-cell"
+                    *matCellDef="let project">{{project.madeDadeline}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row [ngClass]="{'green-bkg': row.score >= 90, 'red-bkg': row.score <= 70}" *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    </mat-table>
+</div>
