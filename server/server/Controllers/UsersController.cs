@@ -43,7 +43,7 @@ namespace server.Controllers
                 }
             };
 
-            return response;
+            return Ok(response);
         }
 
         [HttpGet("projects")]
