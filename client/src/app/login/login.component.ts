@@ -27,12 +27,12 @@ export class LoginComponent {
       })
       .then((response) => {
         this.buttonText = 'Login';
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('token', response.data[0].token);
         this.router.navigate(['/info', { 
-          name: response.data.personalDetails.name,
-          team: response.data.personalDetails.team,
-          joinedAt: response.data.personalDetails.joinedAt,
-          avatar: response.data.personalDetails.avatar,
+          name: response.data[0].personalDetails.name,
+          team: response.data[0].personalDetails.team,
+          joinedAt: response.data[0].personalDetails.joinedAt,
+          avatar: response.data[0].personalDetails.avatar,
         }]);
         return response;
       })

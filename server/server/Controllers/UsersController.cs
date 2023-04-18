@@ -22,7 +22,7 @@ namespace server.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<LoginResponse> Login(LoginRequest request)
+        public ActionResult<IEnumerable<LoginResponse>> Login(LoginRequest request)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == request.Email && u.Password == request.Password);
 
@@ -31,7 +31,7 @@ namespace server.Controllers
                 return NotFound();
             }
 
-            var response = new LoginResponse
+            var loginResponse = new LoginResponse
             {
                 Token = user.Token,
                 PersonalDetails = new UserPersonalDetails
@@ -41,6 +41,11 @@ namespace server.Controllers
                     JoinedAt = user.JoinedAt.ToString("yyyy-MM-dd"),
                     Avatar = user.Avatar
                 }
+            };
+
+            var response = new List<LoginResponse>()
+            {
+                loginResponse
             };
 
             return Ok(response);
