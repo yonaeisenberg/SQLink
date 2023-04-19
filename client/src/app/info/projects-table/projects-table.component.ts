@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import axios from "axios";
 import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
@@ -35,14 +34,17 @@ export class ProjectsTableComponent {
               private apiService: ApiService) {}
 
   ngOnInit() {
+    //get token
     let token = localStorage.getItem('token');
 
+    //configure the authorization token
     let config = {
       headers: {
         'Authorization': 'Bearer ' + token
       }
     }
 
+    //use the api service to get the projects
     this.apiService.getProjects(config).then((response: {
           "name": string,
           "score": number,
@@ -65,6 +67,7 @@ export class ProjectsTableComponent {
   }
 
   ngAfterViewInit() {
+    //subscribe to the material angular sort event
     this.sort.sortChange.subscribe((by) => {
       if (by.direction == 'asc') {
         this.filteredProjects = this.filteredProjects.sort((a,b) => ((a as any)[by.active] > (b as any)[by.active]) ? 1 : (((b as any)[by.active] > (a as any)[by.active]) ? -1 : 0))
@@ -87,6 +90,7 @@ export class ProjectsTableComponent {
     this.percentage = deadlineMadeProjects.length / this.filteredProjects.length;
   }
 
+  //filter the data when user inputs text in the search bar
   onFilterChange() {
     let lowerFilter = this.filterText.toLowerCase();
     this.filteredProjects = this.projects.filter(p => p.name.toLowerCase().includes(lowerFilter) 

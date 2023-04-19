@@ -15,6 +15,7 @@ export class InfoComponent {
   ngOnInit() {
     let token = localStorage.getItem('token');
 
+    //if no token is in local storage, navigate back to login
     if (!token) {
       this.router.navigate(['/']);
     }
