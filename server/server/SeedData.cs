@@ -10,6 +10,7 @@ namespace server
         {
             context.Database.EnsureCreated();
 
+            // Hash the password we want to use
             var hashedPassword = PasswordHasher.HashPassword("Password123");
 
             if (!context.Users.Any())

@@ -56,6 +56,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//Initialize the seed data using configuration and DbContext
 var config = app.Configuration;
 
 var context = new SQLinkDbContext(config);

@@ -12,7 +12,7 @@ namespace server
 
         public static string HashPassword(string password)
         {
-            //salt = RandomNumberGenerator.GetBytes(keySize);
+            //Hash the password using Pbkdf2
             var hash = Rfc2898DeriveBytes.Pbkdf2(
                 Encoding.UTF8.GetBytes(password),
                 new byte[0],
@@ -24,6 +24,7 @@ namespace server
 
         public static bool VerifyPassword(string password, string hash)
         {
+            //Hash the new password using the same parameters and check equality
             var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, new Byte[0], iterations, hashAlgorithm, keySize);
             return hashToCompare.SequenceEqual(Convert.FromHexString(hash));
         } 
