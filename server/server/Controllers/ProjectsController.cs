@@ -31,19 +31,25 @@ namespace server.Controllers
         [HttpGet("projects")]
         public ActionResult<IEnumerable<Project>> GetProjectsForUser()
         {
+            //Get token from header
             var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
+            //Validate the token to get the user email
             var userEmail = ValidateToken(token);
 
             var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
 
+            // if no user was found (or if the token was not valid) return Unauthorised
             if (user == null)
             {
                 return Unauthorized();
             }
 
+            //Get all the user's projects by userId
             var projects = _context.Projects.Where(p => p.UserId == user.Id).ToList();
 
+
+            //Return an enumerable of projects without the userId
             var response = projects.Select(p => new Project
             {
                 Id = p.Id,
@@ -66,6 +72,7 @@ namespace server.Controllers
             var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
             try
             {
+                //validate the token
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,

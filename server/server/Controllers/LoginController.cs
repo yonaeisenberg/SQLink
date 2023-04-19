@@ -68,6 +68,7 @@ namespace server.Controllers
 
         private string GenerateToken(User user)
         {
+            //Generates a new token using algorithm HmacSha256
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
