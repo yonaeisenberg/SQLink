@@ -10,13 +10,15 @@ namespace server
         {
             context.Database.EnsureCreated();
 
+            var hashedPassword = PasswordHasher.HashPassword("Password123");
+
             if (!context.Users.Any())
             {
                 var users = new User[]
                 {
-                    new User { Email = "test1@test.com", Password = "Password123", Token = "1111-2222-3333-4444", Name = "Test 1", Team = "Developers", JoinedAt = DateTime.Parse("2018-10-01"), Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg" },
-                    new User { Email = "test2@test.com", Password = "Password123", Token = "2222-3333-4444-5555", Name = "Test 2", Team = "Developers", JoinedAt = DateTime.Parse("2019-10-01"), Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg" },
-                    new User { Email = "test3@test.com", Password = "Password123", Token = "3333-4444-5555-6666", Name = "Test 3", Team = "Developers", JoinedAt = DateTime.Parse("2020-10-01"), Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg" }
+                    new User { Email = "test1@test.com", Password = hashedPassword, Name = "Test 1", Team = "Developers", JoinedAt = DateTime.Parse("2018-10-01"), Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg" },
+                    new User { Email = "test2@test.com", Password = hashedPassword, Name = "Test 2", Team = "Developers", JoinedAt = DateTime.Parse("2019-10-01"), Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg" },
+                    new User { Email = "test3@test.com", Password = hashedPassword, Name = "Test 3", Team = "Developers", JoinedAt = DateTime.Parse("2020-10-01"), Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg" }
                 };
                 context.Users.AddRange(users);
             }

@@ -1,17 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace server
 {
     public class SQLinkDbContext : DbContext
     {
+        private readonly IConfiguration _config;
+
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
 
+        public SQLinkDbContext(IConfiguration config)
+        {
+            _config = config;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=localhost;user=SA;password=password;database=SQLink;trusted_connection=false;TrustServerCertificate=True");
+            var connectionString = _config.GetConnectionString("SQLink");
+            optionsBuilder.UseSqlServer(connectionString);
         }
     }
 
@@ -20,7 +29,6 @@ namespace server
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Token { get; set; }
         public string Name { get; set; }
         public string Team { get; set; }
         public DateTime JoinedAt { get; set; }
