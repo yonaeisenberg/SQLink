@@ -22,11 +22,14 @@ export class LoginComponent {
   onSubmit() {
     this.notFound = false;
     this.buttonText = 'Loading...';
+    //use the apiService to perform the login, gets a boolean indicating success
     this.apiService.login(this.email, this.password).then((result: boolean) => {
       if (result){
+        //if successful, navigate to the info page
         this.router.navigate(['/info']);
       }
       else {
+        //if not successful, make the notFound flag true to show error
         this.buttonText = 'Login';
         this.notFound = true;
       }
