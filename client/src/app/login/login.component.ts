@@ -19,6 +19,11 @@ export class LoginComponent {
     private apiService: ApiService
   ) {}
 
+  ngOnInit() {
+    // Clear the local storage every time I get to the login page
+    localStorage.clear();
+  }
+
   onSubmit() {
     this.notFound = false;
     this.buttonText = 'Loading...';
