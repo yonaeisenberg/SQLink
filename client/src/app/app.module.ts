@@ -13,6 +13,9 @@ import { MatSortModule } from "@angular/material/sort";
 import { ProjectsTableComponent } from './info/projects-table/projects-table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ApiService } from './services/api-service.service';
+import { ContactInfoService } from './services/contact-info.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     //MatProgressSpinnerModule
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    ApiService,
+    ContactInfoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

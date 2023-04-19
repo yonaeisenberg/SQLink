@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import axios from "axios";
+import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -30,7 +31,8 @@ export class ProjectsTableComponent {
   percentage!: number;
   filterText: string = "";
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef) {}
+  constructor(private changeDetectorRefs: ChangeDetectorRef,
+              private apiService: ApiService) {}
 
   ngOnInit() {
     let token = localStorage.getItem('token');
@@ -41,19 +43,25 @@ export class ProjectsTableComponent {
       }
     }
 
-    axios.get('https://localhost:7296/User/projects', config)
-      .then((response) => {
-        this.projects = response.data;
+    this.apiService.getProjects(config).then((response: {
+          "name": string,
+          "score": number,
+          "durationInDays": number,
+          "bugsCount": number,
+          "madeDadeline": boolean
+        }[]) => {
+      if (response){
+        this.projects = response;
         console.log(this.projects);
         this.filteredProjects = this.projects;
         this.projectsSource.data = this.projects;
         this.calculateAverage();
         this.calculatePercentage();
         return response;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+      return [];
+    })
+
   }
 
   ngAfterViewInit() {

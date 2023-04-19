@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ContactInfoService } from 'src/app/services/contact-info.service';
 
 @Component({
   selector: 'app-details',
@@ -6,16 +7,19 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent {
-  @Input()
   name!: string;
-
-  @Input()
   team!: string;
-
-  @Input()
   joinedAt!: string;
-
-  @Input()
   avatar!: string;
   
+  constructor(private contactInfoService: ContactInfoService) {}
+
+  ngOnInit() {
+    // Get all the contact info
+    let contactInfo = this.contactInfoService.getContactInfo();
+    this.name = contactInfo.name;
+    this.team = contactInfo.team;
+    this.joinedAt = contactInfo.joinedAt;
+    this.avatar = contactInfo.avatar;
+  }
 }
